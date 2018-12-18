@@ -2,7 +2,6 @@
   "name": "pluralsight-fullstack-react-app",
   "version": "1.0.0",
   "description": "React fullstack isomorphic application",
-  "main": "index.js",
   "repository": "git@github.com:adetola-ralph/pluralsight-fullstack-react-app.git",
   "author": "Oreofeoluwapo Olutola <oreofeoluwapo.olutola@andela.com>",
   "license": "MIT",
@@ -14,13 +13,21 @@
     "babel-preset-react": "^6.24.1",
     "babel-regenerator-runtime": "^6.5.0",
     "dotenv": "^6.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-yields": "^1.1.2",
-    "fs-extra": "^7.0.1"
+    "fs-extra": "^7.0.1",
+    "mongoose": "^5.4.0",
+    "morgan": "^1.9.1",
+    "react": "^16.6.3",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1"
   }
 }
