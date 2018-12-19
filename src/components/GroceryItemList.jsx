@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { GroceryItem } from './GroceryItem';
 import { AddGroceryListItem } from './AddGroceryListItem';
 
-export const GroceryItemList = ({ items, onAddItem }) => (
+export const GroceryItemList = ({ items, onAddItem, newItem, onNameChange }) => (
   <div>
     <h1>Grocery Listify</h1>
-    <AddGroceryListItem onAddItem={onAddItem}/>
+    <AddGroceryListItem onAddItem={onAddItem} newItem={newItem} onNameChange={onNameChange} />
     <div>
       {
         items.map(item => (
@@ -27,5 +27,9 @@ GroceryItemList.propTypes = {
     }),
   ),
   onAddItem: PropTypes.func.isRequired,
+  onNameChange: PropTypes.func.isRequired,
+  newItem: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 

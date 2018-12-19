@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { put, takeLatest, call, all } from 'redux-saga/effects';
+import { put, takeLatest, call, all, select } from 'redux-saga/effects';
 
 import { GET_GROCERY_ITEMS, ADD_GROCERY_ITEM } from './constants';
 import { requestItemsSucceeded, addItemSucceeded } from './actions';
@@ -15,8 +15,9 @@ function* fetchGroceryItems() {
   }
 }
 
-function* addGroceryItems(action) {
-  const { item } = action;
+function* addGroceryItems() {
+  const state = yield select();
+  const item = { ...state.newItem };
 
   try {
     const response = yield call(fetch, '/api/items', {
