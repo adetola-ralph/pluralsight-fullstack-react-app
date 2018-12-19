@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import itemReducer from './reducer';
-import { fetchGroceryItemsSaga } from './saga';
+import rootSaga from './saga';
 
 const configureStore = initialState => {
   const sagaMiddleware = createSagaMiddleware();
@@ -29,7 +29,7 @@ const configureStore = initialState => {
     compose(applyMiddleware(...middlewares()), devtools()),
   );
 
-  sagaMiddleware.run(fetchGroceryItemsSaga);
+  sagaMiddleware.run(rootSaga);
 
   return store;
 }
