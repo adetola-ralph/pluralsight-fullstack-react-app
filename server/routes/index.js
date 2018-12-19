@@ -1,4 +1,4 @@
-import boom from 'boom';
+import Boom from 'boom';
 import GroceryItem from '../model/GroceryItems';
 
 export default (router) => {
@@ -12,7 +12,7 @@ export default (router) => {
         const groceryItems = yield GroceryItem.find().exec();
         return res.json(groceryItems.map(item => item.toJSON()));
       } catch (err) {
-        throw boom.badImplementation('Server error, please try again later', err);
+        throw Boom.badImplementation('Server error, please try again later', err);
       }
     })
     .post(function* (req, res) {
@@ -22,7 +22,39 @@ export default (router) => {
         const groceryItem = yield new GroceryItem(item).save();
         res.status(201).json(groceryItem);
       } catch (err) {
-        throw boom.badImplementation('Server error, please try again later', err);
+        throw Boom.badImplementation('Server error, please try again later', err);
       }
     });
+
+    router.route('/items/:id')
+      .delete(function* (req, res) {
+        const { id } = req.params;
+
+        const groceryItem = yield GroceryItem.findOne({ _id: id });
+
+        if (!groceryItem) {
+          throw Boom.notFound();
+        } else {
+          yield groceryItem.remove();
+          res.status(200).json({
+            message: 'Item has been deleted',
+          });
+        }
+      })
+      .patch(function* (req, res) {
+        const { id } = req.params;
+
+        const groceryItem = yield GroceryItem.findOne({ _id: id });
+
+        if (!groceryItem) {
+          throw Boom.notFound();
+        } else {
+          for (const key in req.body) {
+            groceryItem[key] = req.body[key];
+          }
+
+          groceryItem.save();
+          res.json(groceryItem);
+        }
+      });
 };

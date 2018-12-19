@@ -43,17 +43,22 @@ if (process.env.NODE_ENV === 'development') {
 
 } */
 
-// error handler
-app.use((err, req, res, next) => {
-  res.status(err.output.statusCode).json(err.output.payload);
-});
-
 routes(router);
 app.use('/api', router);
 
 app.get(['/'], function* (req, res) {
   let index = yield fs.readFile('./public/index.html', 'utf-8');
   res.send(index);
+});
+
+// error handler
+app.use((err, req, res, next) => {
+  console.log('does this guy run');
+  if (err.isBoom) {
+    res.status(err.output.statusCode).json(err.output.payload);
+  } else {
+    res.status(500).send();
+  }
 });
 
 app.listen(port, '0.0.0.0', () => console.info(`App listening on port ${port}`));
