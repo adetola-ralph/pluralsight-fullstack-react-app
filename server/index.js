@@ -1,12 +1,34 @@
+import path from 'path';
 import fs from 'fs-extra';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 import webpack from 'webpack';
 import express from 'express';
 import yields from 'express-yields';
-import fs from 'fs-extra';
+import bodyParser from 'body-parser';
+
+import routes from './routes';
+
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({
+    silent: true,
+    debug: true,
+    path: path.join(__dirname, '../.env'),
+  });
+}
+
+// db connection
+// used require because import ran beofre the dotenv config process
+require('./db-config');
 
 const app = express();
-const port = process.eventNames.PORT || '1246';
+const router = express.Router();
+const port = process.env.PORT || '1246';
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(morgan('dev'));
 
 if (process.env.NODE_ENV === 'development') {
   const config = require('../webpack.config.dev.babel').default;
@@ -17,7 +39,12 @@ if (process.env.NODE_ENV === 'development') {
   }));
 
   app.use(require('webpack-hot-middleware')(compiler));
-}
+} /* else {
+
+} */
+
+routes(router);
+app.use('/api', router);
 
 app.get(['/'], function* (req, res) {
   let index = yield fs.readFile('./public/index.html', 'utf-8');
