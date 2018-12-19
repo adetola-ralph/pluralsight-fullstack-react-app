@@ -43,6 +43,11 @@ if (process.env.NODE_ENV === 'development') {
 
 } */
 
+// error handler
+app.use((err, req, res, next) => {
+  res.status(err.output.statusCode).json(err.output.payload);
+});
+
 routes(router);
 app.use('/api', router);
 
