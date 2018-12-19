@@ -17,6 +17,7 @@
     "babel-regenerator-runtime": "^6.5.0",
     "dotenv": "^6.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
     "nodemon": "^1.18.9",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
@@ -26,18 +27,22 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "boom": "^7.3.0",
+    "classnames": "^2.2.6",
+    "css-loader": "^2.0.1",
     "express": "^4.16.4",
     "express-yields": "^1.1.2",
     "fs-extra": "^7.0.1",
     "isomorphic-fetch": "^2.2.1",
     "mongoose": "^5.4.0",
     "morgan": "^1.9.1",
+    "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^0.16.2"
+    "redux-saga": "^0.16.2",
+    "style-loader": "^0.23.1"
   }
 }

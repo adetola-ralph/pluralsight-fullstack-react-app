@@ -8,6 +8,9 @@ import configureStore from './store';
 // app
 import App from './App';
 
+// styles
+import './styles.css';
+
 const store = configureStore();
 
 store.dispatch({ type: 'GET_GROCERY_ITEMS' });

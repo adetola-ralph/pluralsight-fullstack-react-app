@@ -1,9 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
-// import merge from 'webpack-merge';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
-import { stringify } from 'querystring';
-// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -13,10 +11,10 @@ const htmlPlugin = new HtmlWebPackPlugin({
   title: '',
 });
 
-// const miniCssPlugin = new MiniCssExtractPlugin({
-//   filename: "[name].css",
-//   chunkFilename: "[id].css"
-// });
+const miniCssPlugin = new MiniCssExtractPlugin({
+  filename: "[name].css",
+  chunkFilename: "[id].css"
+});
 
 export default {
   entry: [
@@ -38,7 +36,7 @@ export default {
   },
   plugins: [
     htmlPlugin,
-    // miniCssPlugin,
+    miniCssPlugin,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
@@ -57,10 +55,10 @@ export default {
         exclude: /node_modules/,
         loaders: ['babel-loader'],
       },
-      // {
-      //   test: /\.css$/,
-      //   loaders: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
-      // },
+      {
+        test: /\.css$/,
+        loaders: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+      },
       // {
       //   test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
       //   loader: 'file-loader',
