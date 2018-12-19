@@ -1,7 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export const App = () => (
-  <div>
-    <p>Hello there, this is the entry component</p>
-  </div>
-);
+// constants
+import { ADD_GROCERY_ITEM } from './store/constants'
+
+// components
+import { GroceryItemList } from './components/GroceryItemList';
+
+export const App = ({ groceryItems, dispatch }) => {
+  const onAddItem = (item) => dispatch({
+    type: ADD_GROCERY_ITEM,
+    item,
+  });
+
+  return (
+    <div>
+      <GroceryItemList items={groceryItems} onAddItem={onAddItem} />
+    </div>
+  )
+};
+
+const mapStateToProps = (state) => {
+  const { groceryItems } = state;
+
+  return {
+    groceryItems,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
