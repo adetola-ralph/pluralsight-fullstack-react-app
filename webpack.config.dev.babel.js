@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 // import merge from 'webpack-merge';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
+import { stringify } from 'querystring';
 // import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devMode = process.env.NODE_ENV !== 'production';
@@ -42,7 +43,7 @@ export default {
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: 'development',
+        NODE_ENV: JSON.stringify('development'),
         WEBPACK: true,
       }
     }),
