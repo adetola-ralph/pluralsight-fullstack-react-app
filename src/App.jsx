@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // constants
-import { ADD_GROCERY_ITEM, NEW_ITEM_UPDATE } from './store/constants'
+import { ADD_GROCERY_ITEM, NEW_ITEM_UPDATE, DELETE_GROCERY_ITEM } from './store/constants'
 
 // components
 import { GroceryItemList } from './components/GroceryItemList';
@@ -21,9 +21,14 @@ export const App = ({ groceryItems, dispatch, newItem }) => {
     });
   };
 
+  const deleteItem = (item) => dispatch({
+    type: DELETE_GROCERY_ITEM,
+    item,
+  });
+
   return (
     <div>
-      <GroceryItemList items={groceryItems} onAddItem={onAddItem} newItem={newItem} onNameChange={onNameChange} />
+      <GroceryItemList items={groceryItems} onAddItem={onAddItem} newItem={newItem} onNameChange={onNameChange} deleteItem={deleteItem} />
     </div>
   )
 };

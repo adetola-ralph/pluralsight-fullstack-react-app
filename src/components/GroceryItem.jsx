@@ -2,12 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-export const GroceryItem = ({ item }) => (
+export const GroceryItem = ({ item, deleteItem }) => (
   <div>
     <div>
       <h4 className={classNames({ strikethrough: item.purchased })}>
         {item.name}
       </h4>
+      <button onClick={() => deleteItem(item)}>
+        delete
+      </button>
     </div>
   </div>
 );
@@ -18,6 +21,7 @@ GroceryItem.propTypes = {
     purchased: PropTypes.bool,
     _id: PropTypes.string.isRequired,
   }),
+  deleteItem: PropTypes.func.isRequired,
 };
 
 GroceryItem.defaultProps = {

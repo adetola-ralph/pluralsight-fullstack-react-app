@@ -3,6 +3,7 @@ import {
   GET_GROCERY_ITEMS_FAILURE,
   ADD_GROCERY_ITEM_SUCCEEDED,
   NEW_ITEM_UPDATE,
+  DELETE_GROCERY_ITEM_SUCCEEDED
 } from './constants';
 
 const initialState = {
@@ -16,16 +17,24 @@ const itemReducer = (state = initialState, action) => {
   const { type } = action;
 
   switch (type) {
-    case GET_GROCERY_ITEMS_SUCCESS:
+    case GET_GROCERY_ITEMS_SUCCESS: {
       return { ...state, groceryItems: action.items };
-    case ADD_GROCERY_ITEM_SUCCEEDED:
+    }
+    case ADD_GROCERY_ITEM_SUCCEEDED: {
       const { groceryItems } = state;
       const newGroceryItems = [...groceryItems, action.item];
       return { ...state, groceryItems: newGroceryItems, newItem: { name: '' } };
-    case NEW_ITEM_UPDATE:
+    }
+    case NEW_ITEM_UPDATE: {
       let { newItem } = state;
       newItem = { ...newItem, name: action.name };
       return { ...state, newItem };
+    }
+    case DELETE_GROCERY_ITEM_SUCCEEDED: {
+      const { groceryItems } = state;
+      const newGroceryItems = groceryItems.filter((item) => item._id !== action.item._id);
+      return { ...state, groceryItems: newGroceryItems };
+    }
     default:
       return state;
   };
