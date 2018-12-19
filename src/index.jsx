@@ -6,8 +6,13 @@ import { Provider } from 'react-redux';
 import configureStore from './store';
 
 // app
-import { App } from './App';
+import App from './App';
 
-// const store = configureStore();
+const store = configureStore();
 
-render(<App />, document.querySelector('#app'))
+store.dispatch({ type: 'GET_GROCERY_ITEMS' });
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.querySelector('#app'));
