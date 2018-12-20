@@ -6,7 +6,7 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import itemReducer from './reducer';
 import rootSaga from './saga';
 
-const configureStore = initialState => {
+const configureStore = (initialState) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = () => {
@@ -31,6 +31,6 @@ const configureStore = initialState => {
   sagaMiddleware.run(rootSaga);
 
   return store;
-}
+};
 
 export default configureStore;

@@ -1,0 +1,7 @@
+node_modules/**/*
+webpack.*
+dist/**/*
+jest.config.js
+# **/*.spec.js
+/coverage
+/public

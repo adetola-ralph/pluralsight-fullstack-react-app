@@ -9,7 +9,7 @@ import {
   UPDATE_GORCERY_ITEM_FAILURE,
 } from './constants';
 
-export const requestItemsSucceeded = (items) => ({
+export const requestItemsSucceeded = items => ({
   type: GET_GROCERY_ITEMS_SUCCESS,
   items,
 });
@@ -18,7 +18,7 @@ export const requestItemsFailed = () => ({
   type: GET_GROCERY_ITEMS_FAILURE,
 });
 
-export const addItemSucceeded = (item) => ({
+export const addItemSucceeded = item => ({
   type: ADD_GROCERY_ITEM_SUCCEEDED,
   item,
 });
@@ -27,7 +27,7 @@ export const addItemFailed = () => ({
   type: ADD_GROCERY_ITEM_FAILURE,
 });
 
-export const deleteItemSucceeded = (item) => ({
+export const deleteItemSucceeded = item => ({
   type: DELETE_GROCERY_ITEM_SUCCEEDED,
   item,
 });
@@ -36,7 +36,7 @@ export const deleteItemFailed = () => ({
   type: DELETE_GROCERY_ITEM_FAILED,
 });
 
-export const updateItemSucceeded = (item) => ({
+export const updateItemSucceeded = item => ({
   type: UPDATE_GORCERY_ITEM_SUCCEEDED,
   item,
-})
+});

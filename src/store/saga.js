@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
-import { put, takeLatest, call, all, select } from 'redux-saga/effects';
+import {
+  put, takeLatest, call, all, select,
+} from 'redux-saga/effects';
 
 import {
   GET_GROCERY_ITEMS,

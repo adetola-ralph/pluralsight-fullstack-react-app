@@ -3,7 +3,7 @@ import GroceryItem from '../model/GroceryItems';
 import { getGroceryItems } from '../controller/groceryItem';
 
 export default (router) => {
-  router.get('/', function* (req, res) {
+  router.get('/', (req, res) => {
     res.send('hey there, howdy');
   });
 
@@ -27,37 +27,37 @@ export default (router) => {
       }
     });
 
-    router.route('/items/:id')
-      .delete(function* (req, res) {
-        const { id } = req.params;
+  router.route('/items/:id')
+    .delete(function* (req, res) {
+      const { id } = req.params;
 
-        const groceryItem = yield GroceryItem.findOne({ _id: id });
+      const groceryItem = yield GroceryItem.findOne({ _id: id });
 
-        if (!groceryItem) {
-          throw Boom.notFound();
-        } else {
-          yield groceryItem.remove();
-          res.status(200).json({
-            message: 'Item has been deleted',
-          });
-        }
-      })
-      .patch(function* (req, res) {
-        const { id } = req.params;
+      if (!groceryItem) {
+        throw Boom.notFound();
+      } else {
+        yield groceryItem.remove();
+        res.status(200).json({
+          message: 'Item has been deleted',
+        });
+      }
+    })
+    .patch(function* (req, res) {
+      const { id } = req.params;
 
-        const groceryItem = yield GroceryItem.findOne({ _id: id });
+      const groceryItem = yield GroceryItem.findOne({ _id: id });
 
-        if (!groceryItem) {
-          throw Boom.notFound();
-        } else {
-          for (const key in req.body) {
-            if (key !== '_id') {
-              groceryItem[key] = req.body[key];
-            }
+      if (!groceryItem) {
+        throw Boom.notFound();
+      } else {
+        for (const key of req.body) {
+          if (key !== '_id') {
+            groceryItem[key] = req.body[key];
           }
-
-          yield groceryItem.save();
-          res.json(groceryItem);
         }
-      });
+
+        yield groceryItem.save();
+        res.json(groceryItem);
+      }
+    });
 };

@@ -15,17 +15,17 @@ db.once('open', () => {
 
   const items = [
     {
-      name: "Okra",
+      name: 'Okra',
     },
     {
-      name: "Banga",
+      name: 'Banga',
     },
     {
-      name: "Egusi",
+      name: 'Egusi',
       purchased: true,
     },
     {
-      name: "Palm Oil",
+      name: 'Palm Oil',
     },
   ];
 
