@@ -50,10 +50,12 @@ export default (router) => {
           throw Boom.notFound();
         } else {
           for (const key in req.body) {
-            groceryItem[key] = req.body[key];
+            if (key !== '_id') {
+              groceryItem[key] = req.body[key];
+            }
           }
 
-          groceryItem.save();
+          yield groceryItem.save();
           res.json(groceryItem);
         }
       });

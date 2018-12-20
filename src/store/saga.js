@@ -1,8 +1,18 @@
 import fetch from 'isomorphic-fetch';
 import { put, takeLatest, call, all, select } from 'redux-saga/effects';
 
-import { GET_GROCERY_ITEMS, ADD_GROCERY_ITEM, DELETE_GROCERY_ITEM } from './constants';
-import { requestItemsSucceeded, addItemSucceeded, deleteItemSucceeded } from './actions';
+import {
+  GET_GROCERY_ITEMS,
+  ADD_GROCERY_ITEM,
+  DELETE_GROCERY_ITEM,
+  BUY_UNBUY_GROCERY_ITEM,
+} from './constants';
+import {
+  addItemSucceeded,
+  deleteItemSucceeded,
+  updateItemSucceeded,
+  requestItemsSucceeded,
+} from './actions';
 
 function* fetchGroceryItems() {
   try {
@@ -44,11 +54,30 @@ function* deleteGroceryItem({ item }) {
   }
 }
 
+function* buyUnbuyGroceryItem({ item }) {
+  const { purchased } = item;
+  const payload = { ...item, purchased: !purchased };
+  try {
+    const response = yield call(fetch, `/api/items/${item._id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    });
+    const groceryItem = yield response.json();
+    yield put(updateItemSucceeded(groceryItem));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 function* rootSaga() {
   yield all([
     takeLatest(ADD_GROCERY_ITEM, addGroceryItems),
     takeLatest(GET_GROCERY_ITEMS, fetchGroceryItems),
     takeLatest(DELETE_GROCERY_ITEM, deleteGroceryItem),
+    takeLatest(BUY_UNBUY_GROCERY_ITEM, buyUnbuyGroceryItem),
   ]);
 }
 

@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { GroceryItem } from './GroceryItem';
 import { AddGroceryListItem } from './AddGroceryListItem';
 
-export const GroceryItemList = ({ items, onAddItem, newItem, onNameChange, deleteItem }) => (
+export const GroceryItemList = ({ items, onAddItem, newItem, onNameChange, deleteItem, togglePurchase }) => (
   <div>
     <h1>Grocery Listify</h1>
     <AddGroceryListItem onAddItem={onAddItem} newItem={newItem} onNameChange={onNameChange} />
     <div>
       {
         items.map(item => (
-          <GroceryItem key={item._id} item={item} deleteItem={deleteItem} />
+          <GroceryItem key={item._id} item={item} deleteItem={deleteItem} togglePurchase={togglePurchase} />
         ))
       }
     </div>
@@ -32,5 +32,6 @@ GroceryItemList.propTypes = {
     name: PropTypes.string,
   }),
   deleteItem: PropTypes.func.isRequired,
+  togglePurchase: PropTypes.func.isRequired,
 };
 

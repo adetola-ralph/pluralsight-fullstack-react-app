@@ -53,7 +53,6 @@ app.get(['/'], function* (req, res) {
 
 // error handler
 app.use((err, req, res, next) => {
-  console.log('does this guy run');
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);
   } else {

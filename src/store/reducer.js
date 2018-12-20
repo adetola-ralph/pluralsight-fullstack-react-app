@@ -1,9 +1,9 @@
 import {
   GET_GROCERY_ITEMS_SUCCESS,
-  GET_GROCERY_ITEMS_FAILURE,
   ADD_GROCERY_ITEM_SUCCEEDED,
   NEW_ITEM_UPDATE,
-  DELETE_GROCERY_ITEM_SUCCEEDED
+  DELETE_GROCERY_ITEM_SUCCEEDED,
+  UPDATE_GORCERY_ITEM_SUCCEEDED
 } from './constants';
 
 const initialState = {
@@ -33,6 +33,17 @@ const itemReducer = (state = initialState, action) => {
     case DELETE_GROCERY_ITEM_SUCCEEDED: {
       const { groceryItems } = state;
       const newGroceryItems = groceryItems.filter((item) => item._id !== action.item._id);
+      return { ...state, groceryItems: newGroceryItems };
+    }
+    case UPDATE_GORCERY_ITEM_SUCCEEDED: {
+      const { groceryItems } = state;
+      const newGroceryItems = groceryItems.map(item => {
+        if (item._id === action.item._id) {
+          return action.item;
+        }
+
+        return item;
+      });
       return { ...state, groceryItems: newGroceryItems };
     }
     default:

@@ -5,6 +5,8 @@ import {
   ADD_GROCERY_ITEM_FAILURE,
   DELETE_GROCERY_ITEM_FAILED,
   DELETE_GROCERY_ITEM_SUCCEEDED,
+  UPDATE_GORCERY_ITEM_SUCCEEDED,
+  UPDATE_GORCERY_ITEM_FAILURE,
 } from './constants';
 
 export const requestItemsSucceeded = (items) => ({
@@ -33,3 +35,8 @@ export const deleteItemSucceeded = (item) => ({
 export const deleteItemFailed = () => ({
   type: DELETE_GROCERY_ITEM_FAILED,
 });
+
+export const updateItemSucceeded = (item) => ({
+  type: UPDATE_GORCERY_ITEM_SUCCEEDED,
+  item,
+})
