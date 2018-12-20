@@ -1,15 +1,9 @@
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebPackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-// const htmlPlugin = new HtmlWebPackPlugin({
-//   template: './src/index.html',
-//   filename: './index.html',
-//   title: '',
-// });
 
 const miniCssPlugin = new MiniCssExtractPlugin({
   filename: "[name].css",
@@ -32,7 +26,6 @@ export default {
     extensions: ['.js', '.jsx', '.json'],
   },
   plugins: [
-    // htmlPlugin,
     miniCssPlugin,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
@@ -54,7 +47,7 @@ export default {
       },
       {
         test: /\.css$/,
-        loaders: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+        loaders: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
