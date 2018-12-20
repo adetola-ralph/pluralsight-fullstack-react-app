@@ -29,9 +29,6 @@ export default {
   },
   target: 'web',
   resolve: {
-  //   alias: {
-  //     '~': path.resolve(__dirname, 'node_modules'),
-  //   },
     extensions: ['.js', '.jsx', '.json'],
   },
   plugins: [
@@ -59,22 +56,22 @@ export default {
         test: /\.css$/,
         loaders: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
       },
-      // {
-      //   test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-      //   loader: 'file-loader',
-      // },
-      // {
-      //   test: /\.(woff|woff2)$/,
-      //   loader: 'url-loader?prefix=font/&limit=5000',
-      // },
-      // {
-      //   test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-      //   loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
-      // },
-      // {
-      //   test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      //   loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
-      // },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader',
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        loader: 'url-loader?prefix=font/&limit=5000',
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml',
+      },
       // {
       //   enforce: 'pre',
       //   test: /\.jsx?$/,
@@ -85,12 +82,5 @@ export default {
     ],
   },
   mode: 'development',
-  // devtool: 'inline-source-map',
-  // devServer: {
-  //   contentBase: path.resolve(__dirname, 'src'),
-  //   hot: true,
-  //   open: true,
-  //   historyApiFallback: true,
-  //   disableHostCheck: true,
-  // },
+  devtool: 'inline-source-map',
 };

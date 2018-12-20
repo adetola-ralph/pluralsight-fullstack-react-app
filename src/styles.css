@@ -1,4 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+.header {
+  height: 70px;
+  margin-bottom: 10px;
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .strikethrough {
   text-decoration: line-through;
   color: slategray;
+}
+
+button:focus {
+  outline: none;
+}
+
+.grocery-addItem {
+  padding: 10px;
+}
+
+.grocery-addItem form {
+  display: flex;
+  justify-content: center;
+}
+
+.grocery-addItem input {
+  width: 500px;
+  height: 40px;
+  padding-left: 5px;
+  background-color: #F3F4F5;
+  color: #7A818A;
+  border: 0;
+  border-radius: 3px;
+  font-size: 15px;
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+.grocery-addItem input:focus {
+  outline: none;
+}
+
+.grocery-addItem button {
+  padding: 5px 12px;
+  font-size: 12px;
+  border-radius: 3px;
+  height: 40px;
+  border: transparent 2px solid;
+  color: #7A818A;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.grocery-addItem button:hover {
+  border: #d3d4d9 2px solid;
+}
+
+.grocery-addItem button i {
+  margin-right: 5px;
+}
+
+.grocery-item {
+  width: 75%;
+  margin: 0 auto;
+  padding: 12px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: transparent 3px solid;
+}
+
+.grocery-item:hover {
+  background-color: #ECF5FB;
+  color: #3772BC;
+  border-left: #3772BC 3px solid;
+}
+
+.grocery-item h4 i {
+  margin-right: 5px;
+  /* font-size: 7px; */
+}
+
+.grocery-item .actions button {
+  padding: 5px 6px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  height: 33px;
+}
+
+.grocery-item .actions button.delete {
+  background-color: #F0533C;
+  color: #fff;
+  border: 0;
+  width: 33px;
+}
+
+.grocery-item .actions button.purchase.focus {
+  color: #fff;
+  background-color: #3772BC;
+}
+
+.grocery-item .actions button.purchase span:nth-child(2) {
+  margin-left: 4px;
 }

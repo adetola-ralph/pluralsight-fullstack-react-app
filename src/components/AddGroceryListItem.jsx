@@ -11,8 +11,11 @@ export const AddGroceryListItem = ({ newItem, onNameChange, onAddItem }) => {
   return (
     <div className="grocery-addItem">
       <form onSubmit={onSubmit}>
-        <input type="text" value={newItem.name} onChange={onNameChange}/>
-        <button type="submit">Add Item</button>
+        <input type="text" value={newItem.name} onChange={onNameChange} placeholder="Add new item here" />
+        <button type="submit">
+          <i className="fas fa-plus" />
+          Add Item
+        </button>
       </form>
     </div>
   );

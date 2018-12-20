@@ -6,7 +6,6 @@ import { AddGroceryListItem } from './AddGroceryListItem';
 
 export const GroceryItemList = ({ items, onAddItem, newItem, onNameChange, deleteItem, togglePurchase }) => (
   <div>
-    <h1>Grocery Listify</h1>
     <AddGroceryListItem onAddItem={onAddItem} newItem={newItem} onNameChange={onNameChange} />
     <div>
       {

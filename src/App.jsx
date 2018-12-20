@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 // constants
@@ -37,16 +37,23 @@ export const App = ({ groceryItems, dispatch, newItem }) => {
   });
 
   return (
-    <div>
-      <GroceryItemList
-        items={groceryItems}
-        onAddItem={onAddItem}
-        newItem={newItem}
-        onNameChange={onNameChange}
-        deleteItem={deleteItem}
-        togglePurchase={togglePurchase}
-      />
-    </div>
+    <Fragment>
+      <div className="header">
+        <div className="container">
+          <h2>Grocery Listify</h2>
+        </div>
+      </div>
+      <div className="container">
+        <GroceryItemList
+          items={groceryItems}
+          onAddItem={onAddItem}
+          newItem={newItem}
+          onNameChange={onNameChange}
+          deleteItem={deleteItem}
+          togglePurchase={togglePurchase}
+        />
+      </div>
+    </Fragment>
   )
 };
 
