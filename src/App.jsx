@@ -12,7 +12,7 @@ import {
 // components
 import { GroceryItemList } from './components/GroceryItemList';
 
-export const App = ({ groceryItems, dispatch, newItem }) => {
+export const App = ({ groceryItems, dispatch, newItem, errorMessage }) => {
   const onAddItem = () => dispatch({
     type: ADD_GROCERY_ITEM,
   });
@@ -44,6 +44,7 @@ export const App = ({ groceryItems, dispatch, newItem }) => {
         </div>
       </div>
       <div className="container">
+        {errorMessage !== '' && <p className="error-message">{errorMessage}</p>}
         <GroceryItemList
           items={groceryItems}
           onAddItem={onAddItem}
@@ -58,11 +59,12 @@ export const App = ({ groceryItems, dispatch, newItem }) => {
 };
 
 const mapStateToProps = (state) => {
-  const { groceryItems, newItem } = state;
+  const { groceryItems, newItem, errorMessage } = state;
 
   return {
-    groceryItems,
     newItem,
+    groceryItems,
+    errorMessage,
   };
 };
 

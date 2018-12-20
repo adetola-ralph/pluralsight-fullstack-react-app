@@ -1,6 +1,6 @@
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 
 import itemReducer from './reducer';

@@ -30,12 +30,10 @@ if (module.hot) {
 
 store.subscribe(() => {
   const state = store.getState();
-  console.log(state);
+
   if (state.groceryItems.length > 0) {
     console.info('mounting app');
     renderApp(App);
-  } else {
-    console.info("app not yet mounted");
   }
 });
 

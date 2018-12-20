@@ -58,6 +58,7 @@ app.get(['/'], function* (req, res) {
     newItem: {
       name: '',
     },
+    errorMessage: '',
   };
 
   const groceryItems = yield getGroceryItems();
@@ -76,7 +77,7 @@ app.get(['/'], function* (req, res) {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err);
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);

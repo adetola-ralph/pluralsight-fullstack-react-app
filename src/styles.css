@@ -123,3 +123,9 @@ button:focus {
 .grocery-item .actions button.purchase span:nth-child(2) {
   margin-left: 4px;
 }
+
+.error-message {
+  color: #F0533C;
+  text-align: center;
+  margin: 15px 0;
+}

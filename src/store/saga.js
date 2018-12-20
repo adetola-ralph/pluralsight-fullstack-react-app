@@ -14,6 +14,10 @@ import {
   deleteItemSucceeded,
   updateItemSucceeded,
   requestItemsSucceeded,
+  requestItemsFailure,
+  addItemFailure,
+  deleteItemFailure,
+  updateItemFailure,
 } from './actions';
 
 function* fetchGroceryItems() {
@@ -23,7 +27,7 @@ function* fetchGroceryItems() {
     yield put(requestItemsSucceeded(items));
   } catch (err) {
     console.error(err);
-    // yield put()
+    yield put(requestItemsFailure('Error getting grocery items, please try again later'));
   }
 }
 
@@ -43,16 +47,17 @@ function* addGroceryItems() {
     yield put(addItemSucceeded(responseItem));
   } catch (err) {
     console.error(err);
-    // yield put()
+    yield put(addItemFailure('Error adding new grocery items, please try again later'));
   }
 }
 
 function* deleteGroceryItem({ item }) {
   try {
-    const response = yield call(fetch, `/api/items/${item._id}`, { method: 'DELETE' });
+    yield call(fetch, `/api/items/${item._id}`, { method: 'DELETE' });
     yield put(deleteItemSucceeded(item));
   } catch (err) {
     console.error(err);
+    yield put(deleteItemFailure('Error deleting grocery items, please try again later'));
   }
 }
 
@@ -71,6 +76,7 @@ function* buyUnbuyGroceryItem({ item }) {
     yield put(updateItemSucceeded(groceryItem));
   } catch (err) {
     console.error(err);
+    yield put(updateItemFailure('Error buying the grocery items, please try again later'));
   }
 }
 

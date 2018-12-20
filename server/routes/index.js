@@ -50,7 +50,8 @@ export default (router) => {
       if (!groceryItem) {
         throw Boom.notFound();
       } else {
-        for (const key of req.body) {
+        const keys = Object.keys(req.body);
+        for (const key of keys) {
           if (key !== '_id') {
             groceryItem[key] = req.body[key];
           }

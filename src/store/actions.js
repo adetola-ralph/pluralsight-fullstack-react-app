@@ -3,7 +3,7 @@ import {
   GET_GROCERY_ITEMS_SUCCESS,
   ADD_GROCERY_ITEM_SUCCEEDED,
   ADD_GROCERY_ITEM_FAILURE,
-  DELETE_GROCERY_ITEM_FAILED,
+  DELETE_GROCERY_ITEM_FAILURE,
   DELETE_GROCERY_ITEM_SUCCEEDED,
   UPDATE_GORCERY_ITEM_SUCCEEDED,
   UPDATE_GORCERY_ITEM_FAILURE,
@@ -14,8 +14,9 @@ export const requestItemsSucceeded = items => ({
   items,
 });
 
-export const requestItemsFailed = () => ({
+export const requestItemsFailure = message => ({
   type: GET_GROCERY_ITEMS_FAILURE,
+  message,
 });
 
 export const addItemSucceeded = item => ({
@@ -23,8 +24,9 @@ export const addItemSucceeded = item => ({
   item,
 });
 
-export const addItemFailed = () => ({
+export const addItemFailure = message => ({
   type: ADD_GROCERY_ITEM_FAILURE,
+  message,
 });
 
 export const deleteItemSucceeded = item => ({
@@ -32,11 +34,17 @@ export const deleteItemSucceeded = item => ({
   item,
 });
 
-export const deleteItemFailed = () => ({
-  type: DELETE_GROCERY_ITEM_FAILED,
+export const deleteItemFailure = message => ({
+  type: DELETE_GROCERY_ITEM_FAILURE,
+  message,
 });
 
 export const updateItemSucceeded = item => ({
   type: UPDATE_GORCERY_ITEM_SUCCEEDED,
   item,
+});
+
+export const updateItemFailure = message => ({
+  type: UPDATE_GORCERY_ITEM_FAILURE,
+  message,
 });

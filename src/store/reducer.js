@@ -11,19 +11,29 @@ const initialState = {
   newItem: {
     name: '',
   },
+  errorMessage: '',
 };
 
 const itemReducer = (state = initialState, action) => {
   const { type } = action;
+  console.log(/(_FAILURE)$/g.test(type), type);
+
+  if (/(_FAILURE)$/g.test(type)) {
+    const { message } = action;
+    return {
+      ...state,
+      errorMessage: message,
+    };
+  }
 
   switch (type) {
     case GET_GROCERY_ITEMS_SUCCESS: {
-      return { ...state, groceryItems: action.items };
+      return { ...state, groceryItems: action.items, errorMessage: '' };
     }
     case ADD_GROCERY_ITEM_SUCCEEDED: {
       const { groceryItems } = state;
       const newGroceryItems = [...groceryItems, action.item];
-      return { ...state, groceryItems: newGroceryItems, newItem: { name: '' } };
+      return { ...state, groceryItems: newGroceryItems, newItem: { name: '' }, errorMessage: '' };
     }
     case NEW_ITEM_UPDATE: {
       let { newItem } = state;
@@ -33,7 +43,7 @@ const itemReducer = (state = initialState, action) => {
     case DELETE_GROCERY_ITEM_SUCCEEDED: {
       const { groceryItems } = state;
       const newGroceryItems = groceryItems.filter(item => item._id !== action.item._id);
-      return { ...state, groceryItems: newGroceryItems };
+      return { ...state, groceryItems: newGroceryItems, errorMessage: '' };
     }
     case UPDATE_GORCERY_ITEM_SUCCEEDED: {
       const { groceryItems } = state;
@@ -44,7 +54,7 @@ const itemReducer = (state = initialState, action) => {
 
         return item;
       });
-      return { ...state, groceryItems: newGroceryItems };
+      return { ...state, groceryItems: newGroceryItems, errorMessage: '' };
     }
     default:
       return state;
