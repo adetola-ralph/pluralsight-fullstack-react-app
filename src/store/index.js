@@ -8,7 +8,6 @@ import rootSaga from './saga';
 
 const configureStore = initialState => {
   const sagaMiddleware = createSagaMiddleware();
-  const devtools = window.devToolsExtension || (() => noop => noop);
 
   const middlewares = () => {
     const middleware = [
@@ -26,7 +25,7 @@ const configureStore = initialState => {
   const store = createStore(
     itemReducer,
     initialState,
-    compose(applyMiddleware(...middlewares()), devtools()),
+    applyMiddleware(...middlewares()),
   );
 
   sagaMiddleware.run(rootSaga);

@@ -14,8 +14,6 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 const store = configureStore();
 
-store.dispatch({ type: 'GET_GROCERY_ITEMS' });
-
 function renderApp(_App) {
   render(
     <Provider store={store}>
@@ -30,4 +28,16 @@ if (module.hot) {
   });
 }
 
-renderApp(App);
+store.subscribe(() => {
+  const state = store.getState();
+  console.log(state);
+  if (state.groceryItems.length > 0) {
+    console.info('mounting app');
+    renderApp(App);
+  } else {
+    console.info("app not yet mounted");
+  }
+});
+
+store.dispatch({ type: 'GET_GROCERY_ITEMS' });
+

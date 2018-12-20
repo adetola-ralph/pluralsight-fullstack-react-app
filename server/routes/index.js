@@ -1,5 +1,6 @@
 import Boom from 'boom';
 import GroceryItem from '../model/GroceryItems';
+import { getGroceryItems } from '../controller/groceryItem';
 
 export default (router) => {
   router.get('/', function* (req, res) {
@@ -9,8 +10,8 @@ export default (router) => {
   router.route('/items')
     .get(function* (req, res) {
       try {
-        const groceryItems = yield GroceryItem.find().exec();
-        return res.json(groceryItems.map(item => item.toJSON()));
+        const items = yield getGroceryItems();
+        res.json(items);
       } catch (err) {
         throw Boom.badImplementation('Server error, please try again later', err);
       }

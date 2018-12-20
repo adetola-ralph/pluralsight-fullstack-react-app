@@ -6,8 +6,14 @@ import webpack from 'webpack';
 import express from 'express';
 import yields from 'express-yields';
 import bodyParser from 'body-parser';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 
+import App from '../src/App';
 import routes from './routes';
+import configureStore from '../src/store';
+import { getGroceryItems } from './controller/groceryItem';
 
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({
@@ -39,20 +45,39 @@ if (process.env.NODE_ENV === 'development') {
   }));
 
   app.use(require('webpack-hot-middleware')(compiler));
-} /* else {
-
-} */
+}
 
 routes(router);
 app.use('/api', router);
 
 app.get(['/'], function* (req, res) {
   let index = yield fs.readFile('./public/index.html', 'utf-8');
+
+  const intialState = {
+    groceryItems: [],
+    newItem: {
+      name: '',
+    },
+  };
+
+  const groceryItems = yield getGroceryItems();
+  intialState.groceryItems = JSON.parse(JSON.stringify(groceryItems));
+
+  const store = configureStore(intialState);
+  const appRendered = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+
+
+  index = index.replace('<div id="root"></div>', appRendered);
   res.send(index);
 });
 
 // error handler
 app.use((err, req, res, next) => {
+  console.error(err);
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);
   } else {

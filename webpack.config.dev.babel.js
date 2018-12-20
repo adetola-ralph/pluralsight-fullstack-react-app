@@ -5,11 +5,11 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-const htmlPlugin = new HtmlWebPackPlugin({
-  template: './src/index.html',
-  filename: './index.html',
-  title: '',
-});
+// const htmlPlugin = new HtmlWebPackPlugin({
+//   template: './src/index.html',
+//   filename: './index.html',
+//   title: '',
+// });
 
 const miniCssPlugin = new MiniCssExtractPlugin({
   filename: "[name].css",
@@ -32,7 +32,7 @@ export default {
     extensions: ['.js', '.jsx', '.json'],
   },
   plugins: [
-    htmlPlugin,
+    // htmlPlugin,
     miniCssPlugin,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
