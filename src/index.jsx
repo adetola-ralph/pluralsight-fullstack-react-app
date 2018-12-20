@@ -16,7 +16,18 @@ const store = configureStore();
 
 store.dispatch({ type: 'GET_GROCERY_ITEMS' });
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>, document.querySelector('#app'));
+function renderApp(_App) {
+  render(
+    <Provider store={store}>
+      <_App />
+    </Provider>, document.querySelector('#app'));
+}
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    const NextApp = require('./App').default;
+    renderApp(NextApp);
+  });
+}
+
+renderApp(App);
