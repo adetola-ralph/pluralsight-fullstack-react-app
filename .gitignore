@@ -61,4 +61,9 @@ typings/
 .next
 
 public/*.js
-public/*.js
+public/*.css
+public/*.svg
+public/*.woff
+public/*.woff2
+public/*.eot
+public/*.ttf

@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 if (process.env.NODE_ENV === 'development') {
-  const config = require('../webpack.config.dev.babel').default;
+  const config = require('../webpack.config.babel').default;
   const compiler = webpack(config);
 
   app.use(require('webpack-dev-middleware')(compiler, {
@@ -46,6 +46,8 @@ if (process.env.NODE_ENV === 'development') {
 
   app.use(require('webpack-hot-middleware')(compiler));
 }
+
+app.use(express.static("public"))
 
 routes(router);
 app.use('/api', router);
@@ -77,7 +79,7 @@ app.get(['/'], function* (req, res) {
 });
 
 // error handler
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.error(err);
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);

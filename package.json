@@ -6,7 +6,11 @@
   "author": "Oreofeoluwapo Olutola <oreofeoluwapo.olutola@andela.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=development node_modules/.bin/nodemon --exec babel-node server"
+    "start:dev": "cross-env NODE_ENV=development node_modules/.bin/nodemon --exec babel-node server",
+    "start": "babel-node server",
+    "postinstall": "yarn global add babel-cli webpack crossenv",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.babel.js",
+    "prestart": "yarn build"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

@@ -4,18 +4,24 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-
 const miniCssPlugin = new MiniCssExtractPlugin({
   filename: "[name].css",
   chunkFilename: "[id].css"
 });
 
-export default {
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    'babel-regenerator-runtime',
-    path.join(__dirname, 'src/index.jsx'),
-  ],
+const webpackConfig = {
+  entry: () => {
+    const entry = [
+      'babel-regenerator-runtime',
+      path.join(__dirname, 'src/index.jsx'),
+    ];
+
+    if (devMode) {
+      entry.unshift('webpack-hot-middleware/client?reload=true');
+    }
+
+    return entry;
+  },
   output: {
     path: path.join(__dirname, 'public'),
     publicPath: '/',
@@ -27,15 +33,14 @@ export default {
   },
   plugins: [
     miniCssPlugin,
-    new webpack.HotModuleReplacementPlugin(),
+
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development'),
+        NODE_ENV: devMode ? JSON.stringify('development') : JSON.stringify('production'),
         WEBPACK: true,
       }
     }),
-
   ],
   module: {
     rules: [
@@ -74,6 +79,15 @@ export default {
       // },
     ],
   },
-  mode: 'development',
+  mode: devMode ? 'development' : 'production',
   devtool: 'inline-source-map',
+  optimization: {
+    minimize: !devMode,
+  }
 };
+
+if (devMode) {
+  webpackConfig.plugins.unshift(new webpack.HotModuleReplacementPlugin());
+}
+
+export default webpackConfig;
