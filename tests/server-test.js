@@ -1,60 +1,93 @@
-import shortid from 'shortid';
-import mockingoose from 'mockingoose';
-import mongoose from 'mongoose';
+import chai from 'chai';
+import sinon from 'sinon';
+import supertest from 'supertest';
 
-// import app from './../server';
-import { getGroceryItems, findOneGroceryItem, newGroceryItems } from '../server/controller/groceryItem';
+const { expect } = chai;
+
+import app from '../server';
+import db, { items } from '../server/db-config';
+import GroceryItemController from '../server/controller/groceryItem';
 import GroceryItem from '../server/model/GroceryItems';
 
-const _doc = [
-  {
-    _id: mongoose.Types.ObjectId(),
-    name: 'Okra',
-  },
-  {
-    _id: mongoose.Types.ObjectId(),
-    name: 'Banga',
-  },
-  {
-    _id: mongoose.Types.ObjectId(),
-    name: 'Egusi',
-    purchased: true,
-  },
-];
+const api = supertest.agent(app);
+let newGroceryListItem;
 
-const newItem = {
-  name: 'Beans',
-  _id: mongoose.Types.ObjectId(),
-};
+describe('Intergration tests', () => {
+  describe('GroceryItem retreival', () => {
+    before(async () => {
+      const promise = [];
+      items.forEach((item) => {
+        promise.push(new GroceryItem(item).save());
+      });
 
-describe('GroceryItems controller', () => {
-  beforeEach(() => {
-    mockingoose.GroceryItem.toReturn(_doc, 'find');
-    mockingoose.GroceryItem.toReturn(_doc[0], 'findOne');
-  });
+      await Promise.all(promise);
+    });
 
-  it('should return a list of grocery items', function* () {
-    const groceryItems = yield getGroceryItems();
-    expect(groceryItems).toEqual(_doc);
-  });
+    it('should return list of all the GroceryItems', async () => {
+      const res = await api.get('/api/items').expect(200);
 
-  it('should find one grocery item', function* () {
-    const item = _doc[0];
-    const groceryItem = yield findOneGroceryItem(item._id);
-    expect(groceryItem.toJSON()).toEqual(item);
-  });
+      expect(res.body).to.not.be.empty;
+      expect(res.body).to.be.an('array')
+      expect(res.body).to.have.lengthOf(4);
+    });
 
-  it('should create new groceryitem', function* () {
-    mockingoose.GroceryItem.toReturn(newItem, 'save');
-    mockingoose.GroceryItem.toReturn(_doc.concat(newItem), 'find');
+    it('should create a new groceryIte,', async () => {
+      const res = await api.post('/api/items')
+        .send({ name: 'Basil' })
+        .expect(201);
 
-    const groceryItem = yield newGroceryItems(newItem);
-    const items = yield getGroceryItems();
-    expect(items).toContainEqual(groceryItem.toJSON());
-    expect(items).toHaveLength(4);
-  });
+      newGroceryListItem = res.body;
+      expect(newGroceryListItem).to.haveOwnProperty('name', 'Basil');
 
-  afterEach(() => {
-    mockingoose.GroceryItem.reset();
+      const res2 = await api.get('/api/items').expect(200);
+      expect(res2.body).to.have.lengthOf(5);
+      expect(res2.body).to.deep.include(newGroceryListItem);
+    });
+
+    it('should edit an item', async () => {
+      const res = await api.patch(`/api/items/${newGroceryListItem._id}`)
+        .send({ purchased: true })
+        .expect(200);
+
+      expect(res.body).to.eql({ ...newGroceryListItem, purchased: true });
+    });
+
+    it('should delete an item', async () => {
+      const res = await api.delete(`/api/items/${newGroceryListItem._id}`)
+        .expect(200);
+
+      expect(res.body.message).to.equal('Item has been deleted');
+
+      const res2 = await api.get('/api/items').expect(200);
+      expect(res2.body).to.have.lengthOf(4);
+      expect(res2.body).to.not.deep.include(newGroceryListItem);
+    });
+
+    it('should return 404 when you try to edit a non-existing item', async () => {
+      const res = await api.patch(`/api/items/${newGroceryListItem._id}`)
+        .send({ purchased: true })
+        .expect(404);
+
+      // expect(res.body).to.eql({ ...newGroceryListItem, purchased: true });
+    });
+
+    describe('error handling', () => {
+      before(() => {
+        const stub = sinon.stub(GroceryItemController, 'getGroceryItems')
+        stub.throws('This is an error');
+      });
+
+      it('should return 500 on event of an error', async () => {
+        const res = await api.get('/api/items').expect(500);
+      });
+
+      after(() => {
+        sinon.resetBehavior();
+      });
+    });
+
+    after(() => {
+      db.dropCollection('groceryitems');
+    });
   });
 });

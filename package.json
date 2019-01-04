@@ -10,7 +10,8 @@
     "start": "node_modules/.bin/babel-node server",
     "build": "NODE_ENV=production webpack --config ./webpack.config.babel.js",
     "prestart": "yarn build",
-    "test": "jest"
+    "test": "jest",
+    "test:server": "NODE_ENV=test node_modules/.bin/nyc node_modules/.bin/mocha --exit --compilers js:babel-core/register --require babel-polyfill tests/server-test.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -20,6 +21,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-regenerator-runtime": "^6.5.0",
+    "chai": "^4.2.0",
     "dotenv": "^6.2.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
@@ -28,8 +30,10 @@
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "mocha": "^5.2.0",
     "mockingoose": "^2.12.0",
     "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
     "shortid": "^2.2.14",
     "url-loader": "^1.1.2",
     "webpack": "^4.27.1",
@@ -58,7 +62,14 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.2",
+    "sinon": "^7.2.2",
     "style-loader": "^0.23.1",
     "supertest": "^3.3.0"
+  },
+  "nyc": {
+    "exclude": [
+      "src/**/*",
+      "tests/**/*"
+    ]
   }
 }

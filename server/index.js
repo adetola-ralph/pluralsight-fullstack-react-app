@@ -13,9 +13,9 @@ import { Provider } from 'react-redux';
 import App from '../src/App';
 import routes from './routes';
 import configureStore from '../src/store';
-import { getGroceryItems } from './controller/groceryItem';
+import GroceryItemController from './controller/groceryItem';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   dotenv.config({
     silent: true,
     debug: true,
@@ -63,7 +63,7 @@ app.get(['/'], function* (req, res) {
     errorMessage: '',
   };
 
-  const groceryItems = yield getGroceryItems();
+  const groceryItems = yield GroceryItemController.getGroceryItems();
   intialState.groceryItems = JSON.parse(JSON.stringify(groceryItems));
 
   const store = configureStore(intialState);
@@ -80,7 +80,7 @@ app.get(['/'], function* (req, res) {
 
 // error handler
 app.use((err, req, res, next) => {
-  console.error(err);
+  // console.error(err);
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);
   } else {
@@ -89,3 +89,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, '0.0.0.0', () => console.info(`App listening on port ${port}`));
+
+export default app;
