@@ -1,7 +1,13 @@
 import mongoose from 'mongoose';
 import GroceryItem from './model/GroceryItems';
 
-const dbUrl = process.env.MONGO_DB_URI;
+let dbUrl;
+
+if (process.env.NODE_ENV !== 'test') {
+  dbUrl = process.env.MONGO_DB_URI;
+} else {
+  dbUrl = process.env.TEST_MONGO_DB_URI;
+}
 
 mongoose.connect(dbUrl, { useNewUrlParser: true });
 const db = mongoose.connection;

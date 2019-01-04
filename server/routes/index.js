@@ -1,6 +1,6 @@
 import Boom from 'boom';
 import GroceryItem from '../model/GroceryItems';
-import { getGroceryItems } from '../controller/groceryItem';
+import { getGroceryItems, newGroceryItems, findOneGroceryItem } from '../controller/groceryItem';
 
 export default (router) => {
   router.get('/', (req, res) => {
@@ -20,7 +20,7 @@ export default (router) => {
       const item = req.body;
 
       try {
-        const groceryItem = yield new GroceryItem(item).save();
+        const groceryItem = yield new newGroceryItems(item);
         res.status(201).json(groceryItem);
       } catch (err) {
         throw Boom.badImplementation('Server error, please try again later', err);
@@ -31,7 +31,7 @@ export default (router) => {
     .delete(function* (req, res) {
       const { id } = req.params;
 
-      const groceryItem = yield GroceryItem.findOne({ _id: id });
+      const groceryItem = yield findOneGroceryItem(id);
 
       if (!groceryItem) {
         throw Boom.notFound();
@@ -45,7 +45,7 @@ export default (router) => {
     .patch(function* (req, res) {
       const { id } = req.params;
 
-      const groceryItem = yield GroceryItem.findOne({ _id: id });
+      const groceryItem = yield findOneGroceryItem(id);
 
       if (!groceryItem) {
         throw Boom.notFound();
