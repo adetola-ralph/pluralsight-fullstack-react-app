@@ -24,7 +24,7 @@ export const GroceryItem = ({ item, deleteItem, togglePurchase }) => (
 );
 
 GroceryItem.propTypes = {
-  items: PropTypes.shape({
+  item: PropTypes.shape({
     name: PropTypes.string.isRequired,
     purchased: PropTypes.bool,
     _id: PropTypes.string.isRequired,

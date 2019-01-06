@@ -58,7 +58,7 @@ export const App = ({ groceryItems, dispatch, newItem, errorMessage }) => {
   )
 };
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   const { groceryItems, newItem, errorMessage } = state;
 
   return {
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     dispatch,
   };
