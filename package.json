@@ -11,7 +11,10 @@
     "build": "NODE_ENV=production webpack --config ./webpack.config.babel.js",
     "prestart": "yarn build",
     "test:server": "NODE_ENV=test node_modules/.bin/nyc node_modules/.bin/mocha --exit --compilers js:babel-core/register --require babel-polyfill tests/server-test.js",
-    "test:client": "NODE_ENV=test node_modules/.bin/jest"
+    "test:client": "NODE_ENV=test node_modules/.bin/jest",
+    "test": "yarn test:server && yarn test:client",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "posttest": "yarn coveralls"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -22,6 +25,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-regenerator-runtime": "^6.5.0",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
     "dotenv": "^6.2.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
