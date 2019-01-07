@@ -6,7 +6,7 @@ import {
   UPDATE_GORCERY_ITEM_SUCCEEDED,
 } from './constants';
 
-const initialState = {
+export const initialState = {
   groceryItems: [],
   newItem: {
     name: '',
@@ -16,7 +16,6 @@ const initialState = {
 
 const itemReducer = (state = initialState, action) => {
   const { type } = action;
-  console.log(/(_FAILURE)$/g.test(type), type);
 
   if (/(_FAILURE)$/g.test(type)) {
     const { message } = action;

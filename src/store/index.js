@@ -15,6 +15,7 @@ const configureStore = (initialState) => {
       sagaMiddleware,
     ];
 
+    /* istanbul ignore next */
     if (process.env.NODE_ENV !== 'production') {
       middleware.push(reduxImmutableStateInvariant());
     }
