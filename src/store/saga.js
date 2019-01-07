@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import 'isomorphic-fetch';
 import {
   put, takeLatest, call, all, select,
 } from 'redux-saga/effects';
@@ -20,7 +20,7 @@ import {
   updateItemFailure,
 } from './actions';
 
-function* fetchGroceryItems() {
+export function* fetchGroceryItems() {
   try {
     const response = yield call(fetch, '/api/items');
     const items = yield response.json();
@@ -31,7 +31,7 @@ function* fetchGroceryItems() {
   }
 }
 
-function* addGroceryItems() {
+export function* addGroceryItems() {
   const state = yield select();
   const item = { ...state.newItem };
 
@@ -51,7 +51,7 @@ function* addGroceryItems() {
   }
 }
 
-function* deleteGroceryItem({ item }) {
+export function* deleteGroceryItem({ item }) {
   try {
     yield call(fetch, `/api/items/${item._id}`, { method: 'DELETE' });
     yield put(deleteItemSucceeded(item));
@@ -61,7 +61,7 @@ function* deleteGroceryItem({ item }) {
   }
 }
 
-function* buyUnbuyGroceryItem({ item }) {
+export function* buyUnbuyGroceryItem({ item }) {
   const { purchased } = item;
   const payload = { ...item, purchased: !purchased };
   try {
