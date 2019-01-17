@@ -47,8 +47,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.use(express.static("public"))
-
 routes(router);
 app.use('/api', router);
 
@@ -73,10 +71,13 @@ app.get(['/'], function* (req, res) {
     </Provider>
   );
 
-
   index = index.replace('<div id="root"></div>', appRendered);
   res.send(index);
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static("public"));
+}
 
 // error handler
 app.use((err, req, res, next) => {
